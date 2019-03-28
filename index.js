@@ -1,4 +1,29 @@
 function onLoad() {
+    const display = document.getElementById("display");
+    let state = "0";
+    const render = () => display.innerHTML =  state;
+    const handle = (key) => {
+        if(!isNaN(Number(state + key))){
+            state += key;  
+        }
+        else if(["C", "c"].includes(key)){
+            state = "0";
+        }
+        if(state!== "0" && state[0] === "0" && ![".", ","].includes(state[1])){
+            state = state.slice(1);
+        }
+        render();
+    }
+    const handleMouse = (event) => {
+        handle(event.target.innerHTML)
+    }
+    const handleKeyboard = (event) => {
+        handle(event.key)
+    }
+    window.addEventListener("keydown", handleKeyboard)
+    document.querySelectorAll(".key")
+        .forEach(key => key.addEventListener("click", handleMouse));
+
 }
 
 window.addEventListener("load", onLoad);
